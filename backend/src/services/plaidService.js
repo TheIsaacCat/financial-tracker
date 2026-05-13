@@ -6,21 +6,33 @@ class PlaidService {
   async createLinkToken(userId) {
     try {
       const linkTokenRequest = {
-        user: { client_user_id: userId },
+        user: { client_user_id: String(userId) },
         client_name: 'Financial Tracker',
         products: ['auth', 'transactions'],
         country_codes: ['US'],
         language: 'en',
       };
 
-      if (process.env.FRONTEND_URL) {
-        linkTokenRequest.redirect_uri = `${process.env.FRONTEND_URL}/callback`;
+      if (process.env.PLAID_REDIRECT_URI) {
+        linkTokenRequest.redirect_uri = process.env.PLAID_REDIRECT_URI;
       }
 
       const response = await plaidClient.linkTokenCreate(linkTokenRequest);
       return response.data.link_token;
     } catch (error) {
-      throw new Error(`Failed to create link token: ${error.message}`);
+      const plaidError = error.response?.data;
+      if (plaidError) {
+        console.error('Plaid link token error:', {
+          error_type: plaidError.error_type,
+          error_code: plaidError.error_code,
+          error_message: plaidError.error_message,
+          display_message: plaidError.display_message,
+          request_id: plaidError.request_id,
+        });
+      }
+      throw new Error(
+        `Failed to create link token: ${plaidError?.error_message || error.message}`
+      );
     }
   }
 
