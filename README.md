@@ -26,6 +26,19 @@ A full-stack web application that helps you understand your spending by automati
 - **Axios** - API client
 - **Chart.js** - Data visualization
 
+## Local Hosting
+
+Use [LOCAL_HOSTING.md](LOCAL_HOSTING.md) to run the app on your machine with Docker Compose, expose it on your LAN, or set up router port forwarding.
+
+Quick Docker start:
+
+```bash
+cp .env.example .env
+docker compose up --build
+```
+
+Then open `http://localhost:3000`.
+
 ## Deployment
 
 ### Docker Deployment to Render
@@ -123,8 +136,8 @@ The database will be automatically created when you start the backend for the fi
 1. **Register/Login**: Create an account or login at http://localhost:3000
 2. **Connect Bank Account**: Click "Connect Bank Account" and authorize through Plaid
 3. **View Transactions**: Your recent transactions will appear in the dashboard
-4. **Label Transactions**: Click "Label" on each transaction to categorize it
-5. **View Recommendations**: Check the recommendations panel for spending insights
+4. **Change Transaction Types**: Use the type dropdown on each transaction to categorize it
+5. **Review Trends**: Use the dashboard chart to compare monthly spending by type
 
 ## API Endpoints
 
@@ -219,12 +232,11 @@ Each recommendation includes potential monthly savings calculations.
 To run the entire application with Docker Compose:
 
 ```bash
-# Make sure to set your Plaid credentials
-export PLAID_CLIENT_ID=your_client_id
-export PLAID_SECRET=your_secret
+# Copy and edit local environment variables
+cp .env.example .env
 
 # Start all services
-docker-compose up
+docker compose up --build
 
 # Access the application
 # Frontend: http://localhost:3000
