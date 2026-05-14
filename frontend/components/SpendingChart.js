@@ -104,9 +104,14 @@ export default function SpendingChart({ transactions }) {
     const averageMonthlySpending =
       monthlyTotals.reduce((sum, value) => sum + value, 0) / months.length;
     const changeData = monthlyTotals.map((total) => total - averageMonthlySpending);
+    const maxAbsChange = Math.max(
+      1,
+      ...changeData.map((value) => Math.abs(value))
+    );
 
     return {
       averageMonthlySpending,
+      maxAbsChange,
       data: {
         labels: months.map(monthLabel),
         datasets: [
@@ -128,8 +133,8 @@ export default function SpendingChart({ transactions }) {
           {
             type: 'line',
             label: 'Average monthly spending',
-            data: months.map(() => averageMonthlySpending),
-            yAxisID: 'spend',
+            data: months.map(() => 0),
+            yAxisID: 'change',
             borderColor: '#000000',
             backgroundColor: '#000000',
             pointRadius: 0,
@@ -195,14 +200,6 @@ export default function SpendingChart({ transactions }) {
             className="relative"
             style={{ minWidth: `${Math.max(760, monthCount * 96)}px`, height: 440 }}
           >
-            <div className="pointer-events-none absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded border border-gray-900 bg-white/85 px-5 py-3 text-center shadow-sm">
-              <p className="text-xs font-semibold uppercase text-gray-600">
-                Average monthly spending
-              </p>
-              <p className="text-2xl font-bold text-gray-950">
-                {money(chart.averageMonthlySpending)}
-              </p>
-            </div>
             <Chart
               type="bar"
               data={chart.data}
@@ -223,7 +220,13 @@ export default function SpendingChart({ transactions }) {
                   },
                   tooltip: {
                     callbacks: {
-                      label: (context) => `${context.dataset.label}: ${money(context.parsed.y)}`,
+                      label: (context) => {
+                        if (context.dataset.label === 'Average monthly spending') {
+                          return `${context.dataset.label}: ${money(chart.averageMonthlySpending)}`;
+                        }
+
+                        return `${context.dataset.label}: ${money(context.parsed.y)}`;
+                      },
                     },
                   },
                 },
@@ -243,6 +246,8 @@ export default function SpendingChart({ transactions }) {
                   change: {
                     type: 'linear',
                     position: 'right',
+                    min: -chart.maxAbsChange,
+                    max: chart.maxAbsChange,
                     grid: {
                       drawOnChartArea: false,
                     },
