@@ -51,12 +51,12 @@ export default function TransactionList({ transactions, onRefresh }) {
         <tbody>
           {transactions.map((transaction) => (
             <tr key={transaction.id} className="table-row">
-              <td className="px-4 py-3 text-sm whitespace-nowrap text-[#46616b]">{transaction.date}</td>
+              <td className="px-4 py-3 text-sm whitespace-nowrap text-neutral-600">{transaction.date}</td>
               <td className="px-4 py-3">
-                <p className="font-semibold text-[#07131f]">{transaction.merchant || transaction.name}</p>
-                {transaction.notes && <p className="text-xs text-[#647f89]">{transaction.notes}</p>}
+                <p className="font-semibold text-black">{transaction.merchant || transaction.name}</p>
+                {transaction.notes && <p className="text-xs text-neutral-500">{transaction.notes}</p>}
               </td>
-              <td className="px-4 py-3 text-sm text-[#46616b]">
+              <td className="px-4 py-3 text-sm text-neutral-600">
                 {transaction.PlaidAccount?.accountName || 'Account'}
               </td>
               <td className="px-4 py-3">
@@ -73,7 +73,7 @@ export default function TransactionList({ transactions, onRefresh }) {
                   ))}
                 </select>
               </td>
-              <td className="px-4 py-3 text-right font-bold text-[#07131f]">{money(transaction.amount)}</td>
+              <td className="px-4 py-3 text-right font-bold text-black">{money(transaction.amount)}</td>
             </tr>
           ))}
         </tbody>
@@ -81,3 +81,4 @@ export default function TransactionList({ transactions, onRefresh }) {
     </div>
   );
 }
+

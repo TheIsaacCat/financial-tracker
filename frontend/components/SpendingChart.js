@@ -28,14 +28,14 @@ ChartJS.register(
 );
 
 const COLORS = [
-  '#006d77',
-  '#0f172a',
-  '#f59e0b',
-  '#d946ef',
-  '#2563eb',
-  '#16a34a',
-  '#ea580c',
-  '#7c3aed',
+  '#000000',
+  '#2b2b2b',
+  '#4a4a4a',
+  '#666666',
+  '#808080',
+  '#999999',
+  '#b3b3b3',
+  '#d1d1d1',
 ];
 
 function monthKey(date) {
@@ -121,10 +121,10 @@ export default function SpendingChart({ transactions }) {
             data: changeData,
             yAxisID: 'change',
             backgroundColor: changeData.map((value) =>
-              value >= 0 ? 'rgba(220, 38, 38, 0.35)' : 'rgba(22, 163, 74, 0.35)'
+              value >= 0 ? 'rgba(0, 0, 0, 0.35)' : 'rgba(255, 255, 255, 0.85)'
             ),
             borderColor: changeData.map((value) =>
-              value >= 0 ? 'rgba(220, 38, 38, 0.7)' : 'rgba(22, 163, 74, 0.7)'
+              value >= 0 ? 'rgba(0, 0, 0, 0.85)' : 'rgba(0, 0, 0, 0.55)'
             ),
             borderWidth: 1,
             borderRadius: 4,
@@ -135,8 +135,8 @@ export default function SpendingChart({ transactions }) {
             label: 'Average monthly spending',
             data: months.map(() => 0),
             yAxisID: 'change',
-            borderColor: '#07131f',
-            backgroundColor: '#07131f',
+            borderColor: '#000000',
+            backgroundColor: '#000000',
             pointRadius: 0,
             pointHoverRadius: 4,
             borderWidth: 5,
@@ -173,12 +173,12 @@ export default function SpendingChart({ transactions }) {
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
         <div>
           <p className="eyebrow mb-2">Trends</p>
-          <h3 className="text-xl font-black text-[#07131f]">Monthly Spending By Type</h3>
-          <p className="mt-1 text-sm text-[#46616b]">
+          <h3 className="text-xl font-black text-black">Monthly Spending By Type</h3>
+          <p className="mt-1 text-sm text-neutral-600">
             Lines show spending by transaction type. Bars show change versus average.
           </p>
         </div>
-        <label className="flex items-center gap-3 text-sm font-bold text-[#07131f]">
+        <label className="flex items-center gap-3 text-sm font-bold text-black">
           Months
           <input
             type="number"
@@ -217,7 +217,7 @@ export default function SpendingChart({ transactions }) {
                     labels: {
                       boxWidth: 14,
                       usePointStyle: true,
-                      color: '#07131f',
+                      color: '#000000',
                       font: {
                         weight: 700,
                       },
@@ -241,13 +241,13 @@ export default function SpendingChart({ transactions }) {
                     position: 'left',
                     beginAtZero: true,
                     ticks: {
-                      color: '#46616b',
+                      color: '#525252',
                       callback: (value) => money(value),
                     },
                     title: {
                       display: true,
                       text: 'Spending',
-                      color: '#07131f',
+                      color: '#000000',
                     },
                   },
                   change: {
@@ -259,13 +259,13 @@ export default function SpendingChart({ transactions }) {
                       drawOnChartArea: false,
                     },
                     ticks: {
-                      color: '#46616b',
+                      color: '#525252',
                       callback: (value) => money(value),
                     },
                     title: {
                       display: true,
                       text: 'Change',
-                      color: '#07131f',
+                      color: '#000000',
                     },
                   },
                   x: {
@@ -279,7 +279,7 @@ export default function SpendingChart({ transactions }) {
           </div>
         </div>
       ) : (
-        <p className="text-[#46616b]">No spending data is available for the selected period.</p>
+        <p className="text-neutral-600">No spending data is available for the selected period.</p>
       )}
     </div>
   );

@@ -12,7 +12,8 @@ export default function CallbackPage() {
 
   return (
     <main className="app-shell flex items-center justify-center">
-      <p className="panel px-6 py-4 text-sm font-bold text-[#46616b]">Returning to your dashboard...</p>
+      <p className="panel px-6 py-4 text-sm font-bold text-neutral-600">Returning to your dashboard...</p>
     </main>
   );
 }
+
