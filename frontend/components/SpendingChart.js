@@ -106,57 +106,60 @@ export default function SpendingChart({ transactions }) {
     const changeData = monthlyTotals.map((total) => total - averageMonthlySpending);
 
     return {
-      labels: months.map(monthLabel),
-      datasets: [
-        {
-          type: 'bar',
-          label: 'Change vs average',
-          data: changeData,
-          yAxisID: 'change',
-          backgroundColor: changeData.map((value) =>
-            value >= 0 ? 'rgba(220, 38, 38, 0.35)' : 'rgba(22, 163, 74, 0.35)'
-          ),
-          borderColor: changeData.map((value) =>
-            value >= 0 ? 'rgba(220, 38, 38, 0.7)' : 'rgba(22, 163, 74, 0.7)'
-          ),
-          borderWidth: 1,
-          borderRadius: 4,
-          order: 2,
-        },
-        {
-          type: 'line',
-          label: 'Average monthly spending',
-          data: months.map(() => averageMonthlySpending),
-          yAxisID: 'spend',
-          borderColor: '#000000',
-          backgroundColor: '#000000',
-          pointRadius: 0,
-          pointHoverRadius: 4,
-          borderWidth: 5,
-          tension: 0,
-          fill: false,
-          order: 0,
-        },
-        ...groups.map((group, index) => ({
-          type: 'line',
-          label: group.name,
-          data: months.map((month) => group.totals[month]),
-          yAxisID: 'spend',
-          borderColor: COLORS[index % COLORS.length],
-          backgroundColor: COLORS[index % COLORS.length],
-          pointBackgroundColor: COLORS[index % COLORS.length],
-          pointRadius: 3,
-          pointHoverRadius: 5,
-          borderWidth: 2,
-          tension: 0.3,
-          fill: false,
-          order: 1,
-        })),
-      ],
+      averageMonthlySpending,
+      data: {
+        labels: months.map(monthLabel),
+        datasets: [
+          {
+            type: 'bar',
+            label: 'Change vs average',
+            data: changeData,
+            yAxisID: 'change',
+            backgroundColor: changeData.map((value) =>
+              value >= 0 ? 'rgba(220, 38, 38, 0.35)' : 'rgba(22, 163, 74, 0.35)'
+            ),
+            borderColor: changeData.map((value) =>
+              value >= 0 ? 'rgba(220, 38, 38, 0.7)' : 'rgba(22, 163, 74, 0.7)'
+            ),
+            borderWidth: 1,
+            borderRadius: 4,
+            order: 2,
+          },
+          {
+            type: 'line',
+            label: 'Average monthly spending',
+            data: months.map(() => averageMonthlySpending),
+            yAxisID: 'spend',
+            borderColor: '#000000',
+            backgroundColor: '#000000',
+            pointRadius: 0,
+            pointHoverRadius: 4,
+            borderWidth: 5,
+            tension: 0,
+            fill: false,
+            order: 0,
+          },
+          ...groups.map((group, index) => ({
+            type: 'line',
+            label: group.name,
+            data: months.map((month) => group.totals[month]),
+            yAxisID: 'spend',
+            borderColor: COLORS[index % COLORS.length],
+            backgroundColor: COLORS[index % COLORS.length],
+            pointBackgroundColor: COLORS[index % COLORS.length],
+            pointRadius: 3,
+            pointHoverRadius: 5,
+            borderWidth: 2,
+            tension: 0.3,
+            fill: false,
+            order: 1,
+          })),
+        ],
+      },
     };
   }, [monthCount, transactions]);
 
-  const hasData = chart.datasets.some((dataset) =>
+  const hasData = chart.data.datasets.some((dataset) =>
     dataset.data.some((value) => Number.parseFloat(value || 0) !== 0)
   );
 
@@ -188,10 +191,21 @@ export default function SpendingChart({ transactions }) {
 
       {hasData ? (
         <div className="overflow-x-auto pb-2">
-          <div style={{ minWidth: `${Math.max(760, monthCount * 96)}px`, height: 440 }}>
+          <div
+            className="relative"
+            style={{ minWidth: `${Math.max(760, monthCount * 96)}px`, height: 440 }}
+          >
+            <div className="pointer-events-none absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded border border-gray-900 bg-white/85 px-5 py-3 text-center shadow-sm">
+              <p className="text-xs font-semibold uppercase text-gray-600">
+                Average monthly spending
+              </p>
+              <p className="text-2xl font-bold text-gray-950">
+                {money(chart.averageMonthlySpending)}
+              </p>
+            </div>
             <Chart
               type="bar"
-              data={chart}
+              data={chart.data}
               options={{
                 responsive: true,
                 maintainAspectRatio: false,
