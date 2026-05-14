@@ -100,17 +100,17 @@ export default function SpendingChart({ transactions }) {
       .filter((group) => group.total > 0)
       .sort((a, b) => b.total - a.total);
 
-    const changeData = months.map((month, index) => {
-      if (index === 0) return 0;
-      return totalsByMonth[month] - totalsByMonth[months[index - 1]];
-    });
+    const monthlyTotals = months.map((month) => totalsByMonth[month]);
+    const averageMonthlySpending =
+      monthlyTotals.reduce((sum, value) => sum + value, 0) / months.length;
+    const changeData = monthlyTotals.map((total) => total - averageMonthlySpending);
 
     return {
       labels: months.map(monthLabel),
       datasets: [
         {
           type: 'bar',
-          label: 'Change vs previous month',
+          label: 'Change vs average',
           data: changeData,
           yAxisID: 'change',
           backgroundColor: changeData.map((value) =>
@@ -122,6 +122,20 @@ export default function SpendingChart({ transactions }) {
           borderWidth: 1,
           borderRadius: 4,
           order: 2,
+        },
+        {
+          type: 'line',
+          label: 'Average monthly spending',
+          data: months.map(() => averageMonthlySpending),
+          yAxisID: 'spend',
+          borderColor: '#000000',
+          backgroundColor: '#000000',
+          pointRadius: 0,
+          pointHoverRadius: 4,
+          borderWidth: 5,
+          tension: 0,
+          fill: false,
+          order: 0,
         },
         ...groups.map((group, index) => ({
           type: 'line',
@@ -152,7 +166,7 @@ export default function SpendingChart({ transactions }) {
         <div>
           <h3 className="text-lg font-bold text-gray-900">Monthly Spending By Type</h3>
           <p className="text-sm text-gray-600">
-            Lines show spending by transaction type. Bars show month-to-month change.
+            Lines show spending by transaction type. Bars show change versus average.
           </p>
         </div>
         <label className="flex items-center gap-3 text-sm font-semibold text-gray-700">
