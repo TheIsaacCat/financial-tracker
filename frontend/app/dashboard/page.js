@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { useAuth } from '@/lib/useAuth';
 import { plaidAPI, transactionAPI } from '@/lib/api';
+import AppTabs from '@/components/AppTabs';
 import PlaidLinkButton from '@/components/PlaidLinkButton';
 import SpendingChart from '@/components/SpendingChart';
 import TransactionList from '@/components/TransactionList';
@@ -70,9 +70,6 @@ export default function DashboardPage() {
           </h1>
           <div className="flex items-center gap-4">
             <span className="hidden text-sm font-semibold text-neutral-600 sm:inline">{user?.email}</span>
-            <Link href="/statements" className="text-sm font-bold text-black underline decoration-2 underline-offset-4 hover:no-underline">
-              Statements
-            </Link>
             <button
               onClick={logout}
               className="btn-secondary border-black text-black hover:border-black hover:bg-black hover:text-white"
@@ -85,6 +82,8 @@ export default function DashboardPage() {
 
       <div className="app-container py-8">
         <div className="space-y-6">
+          <AppTabs active="/dashboard" />
+
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div>
               <p className="eyebrow mb-2">Dashboard</p>

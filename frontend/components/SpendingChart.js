@@ -28,14 +28,14 @@ ChartJS.register(
 );
 
 const COLORS = [
-  '#000000',
-  '#2b2b2b',
-  '#4a4a4a',
-  '#666666',
-  '#808080',
-  '#999999',
-  '#b3b3b3',
-  '#d1d1d1',
+  '#2563eb',
+  '#16a34a',
+  '#f59e0b',
+  '#dc2626',
+  '#7c3aed',
+  '#0891b2',
+  '#db2777',
+  '#475569',
 ];
 
 function monthKey(date) {
@@ -121,10 +121,10 @@ export default function SpendingChart({ transactions }) {
             data: changeData,
             yAxisID: 'change',
             backgroundColor: changeData.map((value) =>
-              value >= 0 ? 'rgba(0, 0, 0, 0.35)' : 'rgba(255, 255, 255, 0.85)'
+              value >= 0 ? 'rgba(220, 38, 38, 0.35)' : 'rgba(22, 163, 74, 0.35)'
             ),
             borderColor: changeData.map((value) =>
-              value >= 0 ? 'rgba(0, 0, 0, 0.85)' : 'rgba(0, 0, 0, 0.55)'
+              value >= 0 ? 'rgba(220, 38, 38, 0.7)' : 'rgba(22, 163, 74, 0.7)'
             ),
             borderWidth: 1,
             borderRadius: 4,

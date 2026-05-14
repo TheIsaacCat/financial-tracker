@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { statementAPI } from '@/lib/api';
 import { useAuth } from '@/lib/useAuth';
+import AppTabs from '@/components/AppTabs';
 
 function money(value) {
   return Number.parseFloat(value || 0).toLocaleString(undefined, {
@@ -59,6 +60,8 @@ export default function StatementsPage() {
       </nav>
 
       <section className="app-container py-8">
+        <AppTabs active="/statements" />
+        <div className="h-6" />
         <p className="eyebrow mb-2">Statements</p>
         <h1 className="mb-6 text-3xl font-black text-black">Monthly Statements</h1>
         <div className="panel overflow-x-auto">
