@@ -64,7 +64,7 @@ function buildMonths(count) {
 function money(value) {
   return Number.parseFloat(value || 0).toLocaleString(undefined, {
     style: 'currency',
-    currency: 'USD',
+    currency: 'GBP',
     maximumFractionDigits: 0,
   });
 }
@@ -117,7 +117,7 @@ export default function SpendingChart({ transactions }) {
         datasets: [
           {
             type: 'bar',
-            label: 'Change vs average',
+            label: 'Change',
             data: changeData,
             yAxisID: 'change',
             backgroundColor: changeData.map((value) =>
