@@ -27,7 +27,7 @@ router.get('/', async (req, res, next) => {
       where,
       include: [{ model: PlaidAccount, attributes: ['accountName', 'accountType', 'mask'] }],
       order: [['date', 'DESC'], ['createdAt', 'DESC']],
-      limit: Math.min(Number.parseInt(limit, 10) || 50, 200),
+      limit: Math.min(Number.parseInt(limit, 10) || 50, 5000),
     });
 
     res.json({ transactions });
