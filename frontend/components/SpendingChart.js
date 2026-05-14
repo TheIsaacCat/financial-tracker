@@ -3,10 +3,12 @@
 import { useMemo, useState } from 'react';
 import {
   BarElement,
+  BarController,
   CategoryScale,
   Chart as ChartJS,
   Legend,
   LinearScale,
+  LineController,
   LineElement,
   PointElement,
   Tooltip,
@@ -14,9 +16,11 @@ import {
 import { Chart } from 'react-chartjs-2';
 
 ChartJS.register(
+  BarController,
   BarElement,
   CategoryScale,
   LinearScale,
+  LineController,
   LineElement,
   PointElement,
   Tooltip,
