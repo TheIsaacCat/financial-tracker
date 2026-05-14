@@ -54,26 +54,28 @@ export default function DashboardPage() {
 
   if (authLoading || loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-xl text-gray-600">Loading...</div>
+      <div className="app-shell flex items-center justify-center">
+        <div className="panel px-6 py-4 text-lg font-bold text-[#07131f]">Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <nav className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-blue-600">Financial Tracker</h1>
-          <div className="flex items-center space-x-4">
-            <span className="text-gray-700">{user?.email}</span>
-            <Link href="/statements" className="text-blue-600 font-semibold">
+    <div className="app-shell">
+      <nav className="app-nav">
+        <div className="app-container flex justify-between items-center py-4">
+          <h1 className="flex items-center gap-3 text-lg font-black text-[#07131f]">
+            <span className="brand-mark">F</span>
+            Financial Tracker
+          </h1>
+          <div className="flex items-center gap-4">
+            <span className="hidden text-sm font-semibold text-[#46616b] sm:inline">{user?.email}</span>
+            <Link href="/statements" className="text-sm font-bold text-[#0a7282] hover:text-[#07131f]">
               Statements
             </Link>
             <button
               onClick={logout}
-              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+              className="btn-secondary border-[#f0b3b3] text-[#9f1d1d] hover:border-[#9f1d1d] hover:bg-[#fff4f4]"
             >
               Logout
             </button>
@@ -81,12 +83,13 @@ export default function DashboardPage() {
         </div>
       </nav>
 
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className="app-container py-8">
         <div className="space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div>
-              <h2 className="text-xl font-bold text-gray-900">Spending Trends</h2>
-              <p className="text-sm text-gray-600">
+              <p className="eyebrow mb-2">Dashboard</p>
+              <h2 className="text-3xl font-black text-[#07131f]">Spending Trends</h2>
+              <p className="mt-2 text-sm text-[#46616b]">
                 Compare transaction types month by month.
               </p>
             </div>
@@ -97,7 +100,7 @@ export default function DashboardPage() {
                     await plaidAPI.syncTransactions();
                     await loadData();
                   }}
-                  className="text-sm bg-white border border-gray-200 px-4 py-2 rounded font-semibold text-gray-800 hover:bg-gray-100"
+                  className="btn-secondary"
                 >
                   Sync
                 </button>
@@ -110,14 +113,17 @@ export default function DashboardPage() {
             <>
               <SpendingChart transactions={transactions} />
 
-              <div className="bg-white p-6 rounded-lg shadow">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">Transactions</h3>
+              <div className="panel overflow-hidden">
+                <div className="border-b border-[#b9e4ec] px-6 py-5">
+                  <p className="eyebrow mb-2">Ledger</p>
+                  <h3 className="text-xl font-black text-[#07131f]">Transactions</h3>
+                </div>
                 <TransactionList transactions={transactions} onRefresh={loadData} />
               </div>
             </>
           ) : (
-            <div className="bg-white p-8 rounded-lg shadow">
-              <p className="text-gray-600">
+            <div className="panel p-8">
+              <p className="text-[#46616b]">
                 No transactions yet. Connect or sync an account to populate the chart.
               </p>
             </div>

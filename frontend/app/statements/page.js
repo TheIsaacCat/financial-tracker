@@ -9,7 +9,7 @@ import { useAuth } from '@/lib/useAuth';
 function money(value) {
   return Number.parseFloat(value || 0).toLocaleString(undefined, {
     style: 'currency',
-    currency: 'USD',
+    currency: 'GBP',
   });
 }
 
@@ -41,26 +41,30 @@ export default function StatementsPage() {
   }, [user]);
 
   if (authLoading || loading) {
-    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+    return <div className="app-shell flex items-center justify-center">Loading...</div>;
   }
 
   return (
-    <main className="min-h-screen bg-gray-50">
-      <nav className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <Link href="/dashboard" className="text-2xl font-bold text-blue-600">Financial Tracker</Link>
-          <button onClick={logout} className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+    <main className="app-shell">
+      <nav className="app-nav">
+        <div className="app-container flex justify-between items-center py-4">
+          <Link href="/dashboard" className="flex items-center gap-3 text-lg font-black text-[#07131f]">
+            <span className="brand-mark">F</span>
+            Financial Tracker
+          </Link>
+          <button onClick={logout} className="btn-secondary border-[#f0b3b3] text-[#9f1d1d] hover:border-[#9f1d1d] hover:bg-[#fff4f4]">
             Logout
           </button>
         </div>
       </nav>
 
-      <section className="max-w-7xl mx-auto px-6 py-8">
-        <h1 className="text-2xl font-bold mb-6">Monthly Statements</h1>
-        <div className="bg-white rounded-lg shadow overflow-x-auto">
+      <section className="app-container py-8">
+        <p className="eyebrow mb-2">Statements</p>
+        <h1 className="mb-6 text-3xl font-black text-[#07131f]">Monthly Statements</h1>
+        <div className="panel overflow-x-auto">
           <table className="w-full text-left">
             <thead>
-              <tr className="border-b text-sm text-gray-500">
+              <tr className="table-head">
                 <th className="p-4">Month</th>
                 <th className="p-4">Account</th>
                 <th className="p-4 text-right">Credits</th>
@@ -70,7 +74,7 @@ export default function StatementsPage() {
             </thead>
             <tbody>
               {statements.map((statement) => (
-                <tr key={statement.id} className="border-b last:border-b-0">
+                <tr key={statement.id} className="table-row">
                   <td className="p-4 font-medium">{statement.month}</td>
                   <td className="p-4">{statement.PlaidAccount?.accountName || 'Account'}</td>
                   <td className="p-4 text-right text-green-700">{money(statement.totalCredits)}</td>
@@ -80,7 +84,7 @@ export default function StatementsPage() {
               ))}
               {statements.length === 0 && (
                 <tr>
-                  <td className="p-4 text-gray-600" colSpan="5">
+                  <td className="p-4 text-[#46616b]" colSpan="5">
                     No statements yet. Connect an account and sync transactions first.
                   </td>
                 </tr>

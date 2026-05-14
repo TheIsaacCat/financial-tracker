@@ -29,33 +29,38 @@ export default function RegisterPage() {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <form onSubmit={handleSubmit} className="w-full max-w-md bg-white p-8 rounded-lg shadow">
-        <h1 className="text-2xl font-bold mb-6">Create account</h1>
-        {error && <p className="bg-red-50 text-red-700 p-3 rounded mb-4">{error}</p>}
+    <main className="app-shell flex items-center justify-center px-4 py-12">
+      <form onSubmit={handleSubmit} className="panel w-full max-w-md p-8">
+        <Link href="/" className="mb-8 flex items-center gap-3">
+          <span className="brand-mark">F</span>
+          <span className="text-sm font-black">Financial Tracker</span>
+        </Link>
+        <p className="eyebrow mb-2">Get started</p>
+        <h1 className="mb-6 text-3xl font-black text-[#07131f]">Create account</h1>
+        {error && <p className="mb-4 rounded border border-red-200 bg-red-50 p-3 text-red-700">{error}</p>}
         <div className="grid grid-cols-2 gap-3">
           <label className="block mb-4">
-            <span className="block text-sm font-medium mb-1">First name</span>
-            <input className="w-full border rounded px-3 py-2" value={form.firstName} onChange={(event) => updateField('firstName', event.target.value)} />
+            <span className="mb-1 block text-sm font-bold text-[#07131f]">First name</span>
+            <input className="field" value={form.firstName} onChange={(event) => updateField('firstName', event.target.value)} />
           </label>
           <label className="block mb-4">
-            <span className="block text-sm font-medium mb-1">Last name</span>
-            <input className="w-full border rounded px-3 py-2" value={form.lastName} onChange={(event) => updateField('lastName', event.target.value)} />
+            <span className="mb-1 block text-sm font-bold text-[#07131f]">Last name</span>
+            <input className="field" value={form.lastName} onChange={(event) => updateField('lastName', event.target.value)} />
           </label>
         </div>
         <label className="block mb-4">
-          <span className="block text-sm font-medium mb-1">Email</span>
-          <input className="w-full border rounded px-3 py-2" value={form.email} onChange={(event) => updateField('email', event.target.value)} type="email" required />
+          <span className="mb-1 block text-sm font-bold text-[#07131f]">Email</span>
+          <input className="field" value={form.email} onChange={(event) => updateField('email', event.target.value)} type="email" required />
         </label>
         <label className="block mb-6">
-          <span className="block text-sm font-medium mb-1">Password</span>
-          <input className="w-full border rounded px-3 py-2" value={form.password} onChange={(event) => updateField('password', event.target.value)} type="password" required minLength={8} />
+          <span className="mb-1 block text-sm font-bold text-[#07131f]">Password</span>
+          <input className="field" value={form.password} onChange={(event) => updateField('password', event.target.value)} type="password" required minLength={8} />
         </label>
-        <button disabled={submitting} className="w-full bg-blue-600 text-white py-2 rounded font-semibold disabled:opacity-50">
+        <button disabled={submitting} className="btn-primary w-full">
           {submitting ? 'Creating account...' : 'Create account'}
         </button>
-        <p className="text-sm text-gray-600 mt-4">
-          Already registered? <Link href="/login" className="text-blue-600 font-semibold">Log in</Link>
+        <p className="mt-4 text-sm text-[#46616b]">
+          Already registered? <Link href="/login" className="font-bold text-[#0a7282] hover:text-[#07131f]">Log in</Link>
         </p>
       </form>
     </main>

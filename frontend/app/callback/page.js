@@ -11,8 +11,8 @@ export default function CallbackPage() {
   }, [router]);
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gray-50">
-      <p className="text-gray-600">Returning to your dashboard...</p>
+    <main className="app-shell flex items-center justify-center">
+      <p className="panel px-6 py-4 text-sm font-bold text-[#46616b]">Returning to your dashboard...</p>
     </main>
   );
 }

@@ -19,7 +19,7 @@ const GROUPS = [
 function money(value) {
   return Number.parseFloat(value || 0).toLocaleString(undefined, {
     style: 'currency',
-    currency: 'USD',
+    currency: 'GBP',
   });
 }
 
@@ -40,28 +40,28 @@ export default function TransactionList({ transactions, onRefresh }) {
     <div className="overflow-x-auto">
       <table className="w-full text-left">
         <thead>
-          <tr className="border-b text-sm text-gray-500">
-            <th className="py-2 pr-3">Date</th>
-            <th className="py-2 pr-3">Merchant</th>
-            <th className="py-2 pr-3">Account</th>
-            <th className="py-2 pr-3">Type</th>
-            <th className="py-2 pr-3 text-right">Amount</th>
+          <tr className="table-head">
+            <th className="px-4 py-3">Date</th>
+            <th className="px-4 py-3">Merchant</th>
+            <th className="px-4 py-3">Account</th>
+            <th className="px-4 py-3">Type</th>
+            <th className="px-4 py-3 text-right">Amount</th>
           </tr>
         </thead>
         <tbody>
           {transactions.map((transaction) => (
-            <tr key={transaction.id} className="border-b last:border-b-0">
-              <td className="py-3 pr-3 text-sm whitespace-nowrap">{transaction.date}</td>
-              <td className="py-3 pr-3">
-                <p className="font-medium">{transaction.merchant || transaction.name}</p>
-                {transaction.notes && <p className="text-xs text-gray-500">{transaction.notes}</p>}
+            <tr key={transaction.id} className="table-row">
+              <td className="px-4 py-3 text-sm whitespace-nowrap text-[#46616b]">{transaction.date}</td>
+              <td className="px-4 py-3">
+                <p className="font-semibold text-[#07131f]">{transaction.merchant || transaction.name}</p>
+                {transaction.notes && <p className="text-xs text-[#647f89]">{transaction.notes}</p>}
               </td>
-              <td className="py-3 pr-3 text-sm text-gray-600">
+              <td className="px-4 py-3 text-sm text-[#46616b]">
                 {transaction.PlaidAccount?.accountName || 'Account'}
               </td>
-              <td className="py-3 pr-3">
+              <td className="px-4 py-3">
                 <select
-                  className="border rounded px-2 py-1 text-sm"
+                  className="field min-w-36 py-1.5 text-sm"
                   value={transaction.group || 'Other'}
                   disabled={savingId === transaction.id}
                   onChange={(event) => updateGroup(transaction, event.target.value)}
@@ -73,7 +73,7 @@ export default function TransactionList({ transactions, onRefresh }) {
                   ))}
                 </select>
               </td>
-              <td className="py-3 pr-3 text-right font-semibold">{money(transaction.amount)}</td>
+              <td className="px-4 py-3 text-right font-bold text-[#07131f]">{money(transaction.amount)}</td>
             </tr>
           ))}
         </tbody>

@@ -28,14 +28,14 @@ ChartJS.register(
 );
 
 const COLORS = [
+  '#006d77',
+  '#0f172a',
+  '#f59e0b',
+  '#d946ef',
   '#2563eb',
   '#16a34a',
-  '#f59e0b',
-  '#dc2626',
+  '#ea580c',
   '#7c3aed',
-  '#0891b2',
-  '#db2777',
-  '#475569',
 ];
 
 function monthKey(date) {
@@ -135,8 +135,8 @@ export default function SpendingChart({ transactions }) {
             label: 'Average monthly spending',
             data: months.map(() => 0),
             yAxisID: 'change',
-            borderColor: '#000000',
-            backgroundColor: '#000000',
+            borderColor: '#07131f',
+            backgroundColor: '#07131f',
             pointRadius: 0,
             pointHoverRadius: 4,
             borderWidth: 5,
@@ -169,15 +169,16 @@ export default function SpendingChart({ transactions }) {
   );
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow">
+    <div className="panel p-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
         <div>
-          <h3 className="text-lg font-bold text-gray-900">Monthly Spending By Type</h3>
-          <p className="text-sm text-gray-600">
+          <p className="eyebrow mb-2">Trends</p>
+          <h3 className="text-xl font-black text-[#07131f]">Monthly Spending By Type</h3>
+          <p className="mt-1 text-sm text-[#46616b]">
             Lines show spending by transaction type. Bars show change versus average.
           </p>
         </div>
-        <label className="flex items-center gap-3 text-sm font-semibold text-gray-700">
+        <label className="flex items-center gap-3 text-sm font-bold text-[#07131f]">
           Months
           <input
             type="number"
@@ -189,7 +190,7 @@ export default function SpendingChart({ transactions }) {
               if (Number.isNaN(nextValue)) return;
               setMonthCount(Math.min(Math.max(nextValue, 1), 24));
             }}
-            className="w-20 rounded border border-gray-300 px-3 py-2 text-gray-900"
+            className="field w-20"
           />
         </label>
       </div>
@@ -216,6 +217,10 @@ export default function SpendingChart({ transactions }) {
                     labels: {
                       boxWidth: 14,
                       usePointStyle: true,
+                      color: '#07131f',
+                      font: {
+                        weight: 700,
+                      },
                     },
                   },
                   tooltip: {
@@ -236,11 +241,13 @@ export default function SpendingChart({ transactions }) {
                     position: 'left',
                     beginAtZero: true,
                     ticks: {
+                      color: '#46616b',
                       callback: (value) => money(value),
                     },
                     title: {
                       display: true,
                       text: 'Spending',
+                      color: '#07131f',
                     },
                   },
                   change: {
@@ -252,11 +259,13 @@ export default function SpendingChart({ transactions }) {
                       drawOnChartArea: false,
                     },
                     ticks: {
+                      color: '#46616b',
                       callback: (value) => money(value),
                     },
                     title: {
                       display: true,
                       text: 'Change',
+                      color: '#07131f',
                     },
                   },
                   x: {
@@ -270,7 +279,7 @@ export default function SpendingChart({ transactions }) {
           </div>
         </div>
       ) : (
-        <p className="text-gray-600">No spending data is available for the selected period.</p>
+        <p className="text-[#46616b]">No spending data is available for the selected period.</p>
       )}
     </div>
   );
