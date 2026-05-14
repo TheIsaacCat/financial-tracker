@@ -165,6 +165,37 @@ const Statement = sequelize.define(
   }
 );
 
+const Budget = sequelize.define(
+  'Budget',
+  {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
+    userId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+    group: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    monthlyLimit: {
+      type: DataTypes.DECIMAL(12, 2),
+      allowNull: false,
+      defaultValue: 0,
+      validate: {
+        min: 0,
+      },
+    },
+  },
+  {
+    tableName: 'budgets',
+    indexes: [{ unique: true, fields: ['userId', 'group'] }],
+  }
+);
+
 User.hasMany(PlaidAccount, { foreignKey: 'userId', onDelete: 'CASCADE' });
 PlaidAccount.belongsTo(User, { foreignKey: 'userId' });
 
@@ -180,10 +211,14 @@ Statement.belongsTo(User, { foreignKey: 'userId' });
 PlaidAccount.hasMany(Statement, { foreignKey: 'plaidAccountId', onDelete: 'CASCADE' });
 Statement.belongsTo(PlaidAccount, { foreignKey: 'plaidAccountId' });
 
+User.hasMany(Budget, { foreignKey: 'userId', onDelete: 'CASCADE' });
+Budget.belongsTo(User, { foreignKey: 'userId' });
+
 module.exports = {
   sequelize,
   User,
   PlaidAccount,
   Transaction,
   Statement,
+  Budget,
 };

@@ -9,6 +9,7 @@ const plaidRoutes = require('./routes/plaid');
 const transactionRoutes = require('./routes/transactions');
 const recommendationRoutes = require('./routes/recommendations');
 const statementRoutes = require('./routes/statements');
+const budgetRoutes = require('./routes/budgets');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -40,6 +41,7 @@ app.use('/api/plaid', requireAuth, plaidRoutes);
 app.use('/api/transactions', requireAuth, transactionRoutes);
 app.use('/api/recommendations', requireAuth, recommendationRoutes);
 app.use('/api/statements', requireAuth, statementRoutes);
+app.use('/api/budgets', requireAuth, budgetRoutes);
 
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });

@@ -50,6 +50,16 @@ export const transactionAPI = {
   getGroups: () => apiClient.get('/transactions/groups'),
 };
 
+// Budget API
+export const budgetAPI = {
+  getBudgets: () => apiClient.get('/budgets'),
+  saveBudget: (group, monthlyLimit) =>
+    apiClient.post('/budgets', { group, monthlyLimit }),
+  updateBudget: (id, monthlyLimit) =>
+    apiClient.put(`/budgets/${id}`, { monthlyLimit }),
+  deleteBudget: (id) => apiClient.delete(`/budgets/${id}`),
+};
+
 // Recommendations API
 export const recommendationsAPI = {
   getAnalysis: () => apiClient.get('/recommendations/analysis'),

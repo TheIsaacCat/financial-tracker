@@ -3,8 +3,9 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/useAuth';
-import { plaidAPI, transactionAPI } from '@/lib/api';
+import { budgetAPI, plaidAPI, transactionAPI } from '@/lib/api';
 import AppTabs from '@/components/AppTabs';
+import BudgetPanel from '@/components/BudgetPanel';
 import PlaidLinkButton from '@/components/PlaidLinkButton';
 import SpendingChart from '@/components/SpendingChart';
 import TransactionList from '@/components/TransactionList';
@@ -16,10 +17,25 @@ function chartStartDate() {
   return date.toISOString().slice(0, 10);
 }
 
+async function loadBudgets() {
+  try {
+    const response = await budgetAPI.getBudgets();
+    return response.data.budgets;
+  } catch (error) {
+    if (error.response?.status === 404) {
+      console.warn('Budgets API is not available on the current backend. Restart the backend to enable budgets.');
+      return [];
+    }
+
+    throw error;
+  }
+}
+
 export default function DashboardPage() {
   const { user, loading: authLoading, logout } = useAuth();
   const router = useRouter();
   const [accounts, setAccounts] = useState([]);
+  const [budgets, setBudgets] = useState([]);
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -38,12 +54,14 @@ export default function DashboardPage() {
   const loadData = async () => {
     try {
       setLoading(true);
-      const [accountsRes, transactionsRes] = await Promise.all([
+      const [accountsRes, budgetsRes, transactionsRes] = await Promise.all([
         plaidAPI.getAccounts(),
+        loadBudgets(),
         transactionAPI.getTransactions({ limit: 5000, startDate: chartStartDate() }),
       ]);
 
       setAccounts(accountsRes.data.accounts);
+      setBudgets(budgetsRes);
       setTransactions(transactionsRes.data.transactions);
     } catch (error) {
       console.error('Failed to load data:', error);
@@ -127,6 +145,8 @@ export default function DashboardPage() {
               </p>
             </div>
           )}
+
+          <BudgetPanel budgets={budgets} onRefresh={loadData} />
         </div>
       </div>
     </div>
