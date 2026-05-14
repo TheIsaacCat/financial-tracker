@@ -33,6 +33,13 @@ Open:
 - Backend health check: `http://localhost:5000/health`
 - Postgres: `localhost:5432`
 
+If you previously saw `next: not found` or `nodemon: not found`, clear the old containers and dependency volumes once:
+
+```powershell
+docker compose down -v
+docker compose up --build
+```
+
 ## Option B: Run Node Locally
 
 Start Postgres first. The default backend connection string is:
