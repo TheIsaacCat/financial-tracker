@@ -70,7 +70,7 @@ function money(value) {
 }
 
 export default function SpendingChart({ transactions }) {
-  const [monthCount, setMonthCount] = useState(12);
+  const [monthCount, setMonthCount] = useState(6);
 
   const chart = useMemo(() => {
     const months = buildMonths(monthCount);
