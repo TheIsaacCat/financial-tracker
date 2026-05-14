@@ -7,6 +7,7 @@ import { useAuth } from '@/lib/useAuth';
 import { plaidAPI, transactionAPI } from '@/lib/api';
 import PlaidLinkButton from '@/components/PlaidLinkButton';
 import SpendingChart from '@/components/SpendingChart';
+import TransactionList from '@/components/TransactionList';
 
 function chartStartDate() {
   const date = new Date();
@@ -106,7 +107,14 @@ export default function DashboardPage() {
           </div>
 
           {transactions.length > 0 ? (
-            <SpendingChart transactions={transactions} />
+            <>
+              <SpendingChart transactions={transactions} />
+
+              <div className="bg-white p-6 rounded-lg shadow">
+                <h3 className="text-lg font-bold text-gray-900 mb-4">Transactions</h3>
+                <TransactionList transactions={transactions} onRefresh={loadData} />
+              </div>
+            </>
           ) : (
             <div className="bg-white p-8 rounded-lg shadow">
               <p className="text-gray-600">
